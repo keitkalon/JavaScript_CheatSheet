@@ -142,3 +142,82 @@ const grid = [
 console.log(numIslands(grid));  // Expected output: 3
 
 ```
+
+
+## Sliding Window Algorithm
+----------------------
+[!NOTE]
+Giving an array and a number k where k is smaller then array.length. Identify and count first k elements and the next k elements until the last k elements from the array with SWA then sum all those small :
+const grid = [1, 2, 3, 4, 5, 6]; const K = 3;
+
+### 1) Initialization:
+    - Start by selecting the first k elements from the array: 1,2,3.
+    - This selection is termed as the centerArray.
+    - Sum the elements of the centerArray to get a result (in this case, 6).
+
+### 2) Caching the Result:   
+    - Store the summed result in an array called sumArray. So, sumArray initially becomes: [6].
+    
+### 3) Sliding the Window:
+    - Subtract the first element of the current centerArray from the last sum (e.g., 6 - 1 = 5).
+    - Add the value of the next unprocessed element outside of centerArray (in this case, 4).
+    - The new sum becomes 5 + 4 = 9.
+    - Cache this sum as well into the sumArray, making it: [6, 9].
+    
+### 4) Updating the centerArray:
+    - Remove the first element from the centerArray.
+    - Add the next unprocessed element from the main array to the centerArray.
+    - In this example, after the first slide, the centerArray updates to: 2,3,4.
+    
+### 5) Continue the Processes 2, 3 and 4 with the new centerArray:
+    - Continue the process of sliding the window and updating the centerArray until there are no elements left in the main array to be added to centerArray.
+    
+```javascript
+/**
+ * Computes the sliding window sum of k consecutive elements from an array.
+ * @param {number[]} grid - The input array.
+ * @param {number} k - The size of the sliding window.
+ * @returns {number[]} - An array of sums for each window of size k.
+ */
+function slidingWindowSum(grid, k) {
+    const n = grid.length;
+    if (!grid || n < k) return [];
+
+    // Step 1: Initialize
+    let windowSum = 0;
+    for (let i = 0; i < k; i++) {
+        windowSum += grid[i];
+    }
+
+    const result = [windowSum];  // This will store the sums of each window
+
+    // Step 3: Sliding the Window
+    for (let i = k; i < n; i++) {
+        // Subtract element going out of window and add element now being included
+        windowSum = windowSum - grid[i - k] + grid[i];
+        result.push(windowSum);
+    }
+
+    return result;
+}
+
+/**
+ * Sums all values of an array.
+ * @param {number[]} array - The input array.
+ * @returns {number} - The sum of all elements.
+ */
+function sumArray(array) {
+    return array.reduce((acc, val) => acc + val, 0);
+}
+
+// Example usage
+const grid = [1, 2, 3, 4, 5, 6];
+const K = 3;
+const slidingSums = slidingWindowSum(grid, K);
+console.log(slidingSums);  // Expected output: [6, 9, 12, 15]
+
+// Sum all sliding window sums
+const total = sumArray(slidingSums);
+console.log(total);  // Expected output: 42
+
+```
