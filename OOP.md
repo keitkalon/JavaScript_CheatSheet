@@ -1,6 +1,7 @@
 # Classes in Javascript
 ```JavaScript
-const badWords = []
+const badWords = [];
+
 class Player {
   #isCaptain = false;
   static description = "Player"; // property of a class an not of an instance
