@@ -51,7 +51,8 @@ class Captain extends Player {
 
 const player1 = new Player("John","McUp")
 const player2 = new Player("Ian","McDown")
-const player3 = new Captain("Andy","McCaptain", [player1, player2])
+const player3 = Player.random();
+const player4 = new Captain("Andy","McCaptain", [player1, player2, player3])
 
 
 player1.shouted();
